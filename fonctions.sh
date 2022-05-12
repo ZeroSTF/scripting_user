@@ -2,27 +2,33 @@
 
 ajouteruser()
 {
-echo "donner le nom de l'utilisateur"
+echo "donner le nom de l'utilisateur à ajouter: "
 read user
 sudo adduser $user >>liste.txt
 }
 
 deverouiller(){
-echo "Donner le nom d'utilisateur a déverouiller :"
+echo "Donner le nom d'utilisateur a déverouiller: "
 	read user 
 	sudo usermod -U $user
-	supprimeruser
+	echo "User unlocked"
 }
 
-## arg1:ancien arg2:nouveau
 modifierRep(){
-mv /home/$1 /home/$2
-usermod --home /home/$1 $2
+echo "Donnez le nom de l'utilisateur dont vous voulez modifier le repertoire: "
+read user
+echo "Donnez le nom du nouveau repertoire: "
+read user1
+cd /home
+sudo mkdir -p $user1
+sudo usermod -d /home/$user1 $user
+echo "repertoire modifié"
+cd ~/Desktop/manage_user
 }
 
 supprimeruser()
 {
-echo "donner le nom de l'utilisateur"
+echo "Donnez le nom de l'utilisateur à supprimer: "
 read nom
 sudo deluser --remove-home $nom >>liste_user_v.txt
 }
@@ -32,6 +38,7 @@ verouiller(){
 	read user 
 	sudo usermod -L $user
 	echo $user>> liste_user_v.txt
+	echo "User locked"
 }
 
 show_usage(){
@@ -53,8 +60,8 @@ menu(){
 	echo "6-	Modifier le repertoire personnel."
 	echo "7-	Afficher le menu graphique YAD "
 	echo "8-	Ajouter"
-	echo "9-        Supprimer"
-	echo "10-       Quitter"
+	echo "9-      Supprimer"
+	echo "10-     Quitter"
 	while (true)
 	do
 
@@ -88,18 +95,13 @@ menu(){
 
 			5)
 			clear
-			read $user
 			deverouiller $user
-			echo "user unlocked"
 			menu
 			;;
 
 			6)
 			clear
-			read $user1
-			read $user2
-			modifierRep $1 $2
-			echo "repertoire modifié"	
+			modifierRep $1 $2		
 			menu
 			;;
 			7)

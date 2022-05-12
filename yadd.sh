@@ -37,7 +37,6 @@ yad --text="Menu Projet 11" \
 
                         elif  [[ $boutton -eq 6 ]]; then
                         modifierRep $1 $2 $3
-
                         yadd
                         
                        
